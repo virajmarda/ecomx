@@ -7,6 +7,7 @@ import Footer from '@/components/layout/footer';
 import { CartProvider } from '@/context/cart-context';
 import { AuthProvider } from '@/context/auth-context';
 import { Toaster } from '@/components/ui/toaster';
+import AIAssistant from '@/components/ai-assistant';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
                 <Navbar />
                 <main className="flex-grow">{children}</main>
                 <Footer />
+                <AIAssistant />
               </div>
               <Toaster />
             </CartProvider>
