@@ -35,9 +35,23 @@ export default function HeroBanner() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),rgba(255,255,255,0))]" />
+      {/* Sophisticated Background Design */}
+      <div className="absolute inset-0">
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(29,78,216,0.15),transparent_60%)]" />
+        
+        {/* Subtle color overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.07] via-violet-500/[0.05] to-emerald-500/[0.1]" />
+        
+        {/* Mesh gradient effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(120,119,198,0.1),rgba(255,255,255,0)_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(74,222,128,0.1),rgba(255,255,255,0)_50%)]" />
+        
+        {/* Soft pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.15] bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 opacity-[0.15] [background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAElBMVEUAAAD8/vz08vT09PT8+vz8/vzpPlMxAAAABXRSTlMCAgIDAwPJ4c0UAAAAPElEQVQ4y2NgYPj/n4GBkYGBgYkBDhgZGA0YGBgZ0AEjA4yDLgHRwIjfABZGdAtYGCE6WAYhOlgGIToA+f4FCS0IWdEAAAAASUVORK5CYII=')] [mask-image:radial-gradient(circle,white,transparent_80%)]" />
       </div>
 
       {/* Content */}
@@ -93,12 +107,6 @@ export default function HeroBanner() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
     </div>
   );
