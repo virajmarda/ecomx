@@ -147,7 +147,7 @@ export default function Navbar() {
             {!user ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" className="font-semibold text-gray-200">
+                  <Button variant="ghost\" className="font-semibold text-gray-200">
                     Login / Sign up
                   </Button>
                 </DialogTrigger>
