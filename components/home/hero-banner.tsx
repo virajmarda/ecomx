@@ -34,23 +34,23 @@ export default function HeroBanner() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Sophisticated Background Design */}
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Sophisticated Dark Background Design */}
       <div className="absolute inset-0">
-        {/* Base gradient layer */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(29,78,216,0.15),transparent_60%)]" />
+        {/* Deep space gradient base */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#1a1a2e,#000000_80%)]" />
         
-        {/* Subtle color overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.07] via-violet-500/[0.05] to-emerald-500/[0.1]" />
+        {/* Rich color overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/[0.07] via-purple-900/[0.05] to-blue-900/[0.1]" />
         
-        {/* Mesh gradient effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(120,119,198,0.1),rgba(255,255,255,0)_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(74,222,128,0.1),rgba(255,255,255,0)_50%)]" />
+        {/* Ethereal mesh gradients */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(78,81,102,0.1),rgba(0,0,0,0)_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(59,82,102,0.1),rgba(0,0,0,0)_50%)]" />
         
-        {/* Soft pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.15] bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.15] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         
-        {/* Subtle noise texture */}
+        {/* Fine noise texture */}
         <div className="absolute inset-0 opacity-[0.15] [background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAElBMVEUAAAD8/vz08vT09PT8+vz8/vzpPlMxAAAABXRSTlMCAgIDAwPJ4c0UAAAAPElEQVQ4y2NgYPj/n4GBkYGBgYkBDhgZGA0YGBgZ0AEjA4yDLgHRwIjfABZGdAtYGCE6WAYhOlgGIToA+f4FCS0IWdEAAAAASUVORK5CYII=')] [mask-image:radial-gradient(circle,white,transparent_80%)]" />
       </div>
 
@@ -63,10 +63,10 @@ export default function HeroBanner() {
             isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           )}
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
             Discover Premium Products
           </h1>
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
             Explore our curated collection of premium products from top brands worldwide
           </p>
 
@@ -78,14 +78,15 @@ export default function HeroBanner() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for products, brands and more..."
-                className="w-full h-16 pl-6 pr-36 text-lg rounded-full border-2 border-primary/20 bg-background/80 backdrop-blur-sm shadow-[0_0_30px_rgba(0,0,0,0.05)] 
-                focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary/40
-                transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(0,0,0,0.1)]"
+                className="w-full h-16 pl-6 pr-36 text-lg rounded-full border-2 border-gray-800 bg-gray-900/80 backdrop-blur-sm shadow-[0_0_30px_rgba(0,0,0,0.3)] 
+                focus-visible:ring-2 focus-visible:ring-blue-500/30 focus-visible:border-blue-500/40
+                transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]
+                text-gray-200 placeholder:text-gray-400"
               />
               <Button 
                 type="submit"
                 size="lg"
-                className="absolute right-2 top-2 h-12 rounded-full px-8 shadow-lg transition-transform duration-300 hover:scale-105"
+                className="absolute right-2 top-2 h-12 rounded-full px-8 shadow-lg transition-transform duration-300 hover:scale-105 bg-blue-600 hover:bg-blue-700"
               >
                 <Search className="h-5 w-5 mr-2" />
                 Search
@@ -94,13 +95,13 @@ export default function HeroBanner() {
           </form>
 
           {/* Popular Searches */}
-          <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm text-muted-foreground">
+          <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm text-gray-400">
             <span>Popular:</span>
             {["Electronics", "Fashion", "Home", "Beauty"].map((term) => (
               <button
                 key={term}
                 onClick={() => router.push(`/category/${term.toLowerCase()}`)}
-                className="hover:text-primary transition-colors"
+                className="hover:text-blue-400 transition-colors"
               >
                 {term}
               </button>
