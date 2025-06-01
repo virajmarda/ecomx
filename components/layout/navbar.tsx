@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { ShoppingCart, Search, User, Chrome, Facebook, Menu } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useAuth } from '@/context/auth-context';
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ShoppingCart, Search, User, Chrome, Facebook, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/context/auth-context";
 import {
   Dialog,
   DialogContent,
@@ -44,8 +44,8 @@ export default function Navbar() {
       setIsScrolled(scrollPosition > 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -62,7 +62,7 @@ export default function Navbar() {
       await login(email, password);
       toast({
         title: "Welcome back!",
-        description: `Hello, ${email.split('@')[0]}!`,
+        description: `Hello, ${email.split("@")[0]}!`,
       });
       router.refresh();
     } catch (error) {
@@ -98,9 +98,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-all duration-700 ease-in-out ${
-      isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
-    }`}>
+    <nav
+      className={`sticky top-0 z-50 w-full transition-all duration-700 ease-in-out ${
+        isScrolled
+          ? "bg-gray-900/80 backdrop-blur-md border-b border-gray-800"
+          : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex-shrink-0">
@@ -109,26 +113,30 @@ export default function Navbar() {
               alt="Xcom"
               width={100}
               height={40}
-              className="h-8 w-auto dark:invert"
+              className="h-8 w-auto invert"
               priority
             />
           </Link>
 
-          <form onSubmit={handleSearch} className={`hidden md:flex max-w-[500px] flex-1 mx-4 transition-all duration-700 ease-in-out ${
-            isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}>
+          <form
+            onSubmit={handleSearch}
+            className={`hidden md:flex max-w-[500px] flex-1 mx-4 transition-all duration-700 ease-in-out ${
+              isScrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+            }`}
+          >
             <div className="relative flex w-full">
               <Input
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for products, brands and more"
-                className="w-full pr-12 focus-visible:ring-1 focus-visible:ring-primary/30"
+                className="w-full pr-12 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-400
+                focus-visible:ring-1 focus-visible:ring-blue-500/30 focus-visible:border-blue-500/40"
               />
-              <Button 
+              <Button
                 type="submit"
                 variant="ghost"
-                className="absolute right-0 px-3 h-full"
+                className="absolute right-0 px-3 h-full text-gray-400 hover:text-gray-200"
               >
                 <Search className="h-5 w-5" />
               </Button>
@@ -139,7 +147,7 @@ export default function Navbar() {
             {!user ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" className="font-semibold">
+                  <Button variant="ghost" className="font-semibold text-gray-200">
                     Login / Sign up
                   </Button>
                 </DialogTrigger>
@@ -173,7 +181,11 @@ export default function Navbar() {
                             required
                           />
                         </div>
-                        <Button type="submit" className="w-full" disabled={isLoading}>
+                        <Button
+                          type="submit"
+                          className="w-full"
+                          disabled={isLoading}
+                        >
                           {isLoading ? "Logging in..." : "Login"}
                         </Button>
                       </form>
@@ -214,7 +226,11 @@ export default function Navbar() {
                             required
                           />
                         </div>
-                        <Button type="submit" className="w-full" disabled={isLoading}>
+                        <Button
+                          type="submit"
+                          className="w-full"
+                          disabled={isLoading}
+                        >
                           {isLoading ? "Creating account..." : "Sign up"}
                         </Button>
                       </form>
@@ -234,15 +250,23 @@ export default function Navbar() {
                 </DialogContent>
               </Dialog>
             ) : (
-              <span className="text-sm font-medium">Hello, {user.name}!</span>
+              <span className="text-sm font-medium text-gray-200">
+                Hello, {user.name}!
+              </span>
             )}
 
-            <Link href="/cart" className="flex items-center gap-2 hover:text-foreground/80 transition-colors">
+            <Link
+              href="/cart"
+              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
+            >
               <ShoppingCart className="h-5 w-5" />
               <span className="font-medium">Cart</span>
             </Link>
 
-            <Link href="/settings" className="flex items-center gap-2 hover:text-foreground/80 transition-colors">
+            <Link
+              href="/settings"
+              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
+            >
               <User className="h-5 w-5" />
               <span className="font-medium">Account</span>
             </Link>
@@ -250,11 +274,15 @@ export default function Navbar() {
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-gray-200"
+              >
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetContent side="right" className="w-full sm:w-[400px]">
               <SheetHeader>
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
@@ -268,7 +296,7 @@ export default function Navbar() {
                       placeholder="Search"
                       className="w-full pr-12"
                     />
-                    <Button 
+                    <Button
                       type="submit"
                       variant="ghost"
                       className="absolute right-0 px-3 h-full"
@@ -277,7 +305,7 @@ export default function Navbar() {
                     </Button>
                   </div>
                 </form>
-                
+
                 <div className="space-y-4">
                   {!user ? (
                     <Dialog>
@@ -314,7 +342,11 @@ export default function Navbar() {
                                   required
                                 />
                               </div>
-                              <Button type="submit" className="w-full" disabled={isLoading}>
+                              <Button
+                                type="submit"
+                                className="w-full"
+                                disabled={isLoading}
+                              >
                                 {isLoading ? "Logging in..." : "Login"}
                               </Button>
                             </form>
@@ -355,7 +387,11 @@ export default function Navbar() {
                                   required
                                 />
                               </div>
-                              <Button type="submit" className="w-full" disabled={isLoading}>
+                              <Button
+                                type="submit"
+                                className="w-full"
+                                disabled={isLoading}
+                              >
                                 {isLoading ? "Creating account..." : "Sign up"}
                               </Button>
                             </form>
@@ -379,14 +415,14 @@ export default function Navbar() {
                       <p className="text-sm font-medium">Hello, {user.name}!</p>
                     </div>
                   )}
-                  
+
                   <Link href="/cart">
                     <Button variant="ghost" className="w-full justify-start">
                       <ShoppingCart className="mr-2 h-5 w-5" />
                       Cart
                     </Button>
                   </Link>
-                  
+
                   <Link href="/settings">
                     <Button variant="ghost" className="w-full justify-start">
                       <User className="mr-2 h-5 w-5" />
