@@ -99,10 +99,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 w-full transition-all duration-700 ease-in-out ${
+      className={`sticky top-0 z-50 w-full transition-all duration-700 ease-in-out border-b ${
         isScrolled
-          ? "bg-gray-900/80 backdrop-blur-md border-b border-gray-800"
-          : "bg-transparent"
+          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          : "bg-transparent border-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -113,7 +113,7 @@ export default function Navbar() {
               alt="Xcom"
               width={100}
               height={40}
-              className="h-8 w-auto invert"
+              className="h-8 w-auto dark:invert"
               priority
             />
           </Link>
@@ -130,13 +130,12 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for products, brands and more"
-                className="w-full pr-12 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-400
-                focus-visible:ring-1 focus-visible:ring-blue-500/30 focus-visible:border-blue-500/40"
+                className="w-full pr-12"
               />
               <Button
                 type="submit"
                 variant="ghost"
-                className="absolute right-0 px-3 h-full text-gray-400 hover:text-gray-200"
+                className="absolute right-0 px-3 h-full"
               >
                 <Search className="h-5 w-5" />
               </Button>
@@ -147,7 +146,7 @@ export default function Navbar() {
             {!user ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost\" className="font-semibold text-gray-200">
+                  <Button variant="ghost" className="font-semibold">
                     Login / Sign up
                   </Button>
                 </DialogTrigger>
@@ -250,14 +249,14 @@ export default function Navbar() {
                 </DialogContent>
               </Dialog>
             ) : (
-              <span className="text-sm font-medium text-gray-200">
+              <span className="text-sm font-medium">
                 Hello, {user.name}!
               </span>
             )}
 
             <Link
               href="/cart"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="font-medium">Cart</span>
@@ -265,7 +264,7 @@ export default function Navbar() {
 
             <Link
               href="/settings"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
               <User className="h-5 w-5" />
               <span className="font-medium">Account</span>
@@ -277,7 +276,7 @@ export default function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-gray-200"
+                className="md:hidden"
               >
                 <Menu className="h-6 w-6" />
               </Button>
