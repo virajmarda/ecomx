@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Search, User, Chrome, Facebook, Menu } from "lucide-react";
+import { ShoppingCart, Search, User, Chrome, Facebook, Menu, MapPin, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/auth-context";
@@ -33,20 +33,9 @@ export default function Navbar() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const { user, login, signup } = useAuth();
   const { toast } = useToast();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,31 +87,19 @@ export default function Navbar() {
   };
 
   return (
-    <nav
-      className={`sticky top-0 z-50 w-full transition-all duration-700 ease-in-out ${
-        isScrolled
-          ? "bg-gray-900/95 backdrop-blur-md border-b border-gray-800"
-          : "bg-gray-900/80 border-b border-gray-800/50"
-      }`}
-    >
+    <nav className="sticky top-0 z-50 w-full bg-blue-600 shadow-md">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between gap-4">
+        {/* Main Navbar */}
+        <div className="flex h-14 items-center justify-between gap-4">
+          {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <Image
-              src="/xcom-logo.png"
-              alt="Xcom"
-              width={100}
-              height={40}
-              className="h-8 w-auto invert"
-              priority
-            />
+            <div className="text-white font-bold text-xl">Xcom</div>
           </Link>
 
+          {/* Search Bar - Desktop */}
           <form
             onSubmit={handleSearch}
-            className={`hidden md:flex max-w-[500px] flex-1 mx-4 transition-all duration-700 ease-in-out ${
-              isScrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-            }`}
+            className="hidden md:flex max-w-[500px] flex-1 mx-4"
           >
             <div className="relative flex w-full">
               <Input
@@ -130,25 +107,26 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for products, brands and more"
-                className="w-full pr-12 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-400
-                focus-visible:ring-1 focus-visible:ring-blue-500/30 focus-visible:border-blue-500/40"
+                className="w-full h-10 pr-12 bg-white border-0 text-gray-800 placeholder:text-gray-500
+                focus-visible:ring-1 focus-visible:ring-orange-400 rounded-sm"
               />
               <Button
                 type="submit"
-                variant="ghost"
-                className="absolute right-0 px-3 h-full text-gray-400 hover:text-gray-200"
+                className="absolute right-0 px-3 h-full bg-orange-500 hover:bg-orange-600 text-white rounded-l-none rounded-r-sm"
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-4 w-4" />
               </Button>
             </div>
           </form>
 
+          {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-6">
+            {/* Login/User */}
             {!user ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost\" className="font-semibold text-gray-200 hover:text-white">
-                    Login / Sign up
+                  <Button variant="ghost" className="text-white hover:bg-blue-700 font-medium">
+                    Login
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -250,34 +228,38 @@ export default function Navbar() {
                 </DialogContent>
               </Dialog>
             ) : (
-              <span className="text-sm font-medium text-gray-200">
-                Hello, {user.name}!
-              </span>
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-white" />
+                <span className="text-white font-medium">
+                  {user.name}
+                </span>
+                <ChevronDown className="h-3 w-3 text-white" />
+              </div>
             )}
 
+            {/* More Dropdown */}
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="font-medium">More</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+
+            {/* Cart */}
             <Link
               href="/cart"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
+              className="flex items-center gap-2 text-white hover:bg-blue-700 px-2 py-1 rounded"
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="font-medium">Cart</span>
             </Link>
-
-            <Link
-              href="/settings"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors"
-            >
-              <User className="h-5 w-5" />
-              <span className="font-medium">Account</span>
-            </Link>
           </div>
 
+          {/* Mobile Menu */}
           <Sheet>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-gray-200 hover:text-white"
+                className="md:hidden text-white hover:bg-blue-700"
               >
                 <Menu className="h-6 w-6" />
               </Button>
@@ -433,6 +415,37 @@ export default function Navbar() {
               </div>
             </SheetContent>
           </Sheet>
+        </div>
+
+        {/* Secondary Navigation */}
+        <div className="hidden md:flex h-10 items-center justify-between border-t border-blue-500">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="text-sm">Electronics</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="text-sm">Fashion</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="text-sm">Home & Kitchen</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="text-sm">Beauty</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+              <span className="text-sm">Sports</span>
+              <ChevronDown className="h-3 w-3" />
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-1 text-white text-sm">
+            <MapPin className="h-3 w-3" />
+            <span>Deliver to Mumbai 400001</span>
+          </div>
         </div>
       </div>
     </nav>
