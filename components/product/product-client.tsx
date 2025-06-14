@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Heart, 
   Share2, 
@@ -24,15 +25,15 @@ import { Product } from "@/lib/types";
 
 interface ProductClientProps {
   product: Product;
-  onBuyNow: () => void;
 }
 
-export function ProductClient({ product, onBuyNow }: ProductClientProps) {
+export function ProductClient({ product }: ProductClientProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isFavorited, setIsFavorited] = useState(false);
   const { toast } = useToast();
   const { addItem } = useCart();
+  const router = useRouter();
   
   // Calculate discount percentage if discounted price exists
   const discountPercentage = product.discountPrice
@@ -69,7 +70,7 @@ export function ProductClient({ product, onBuyNow }: ProductClientProps) {
       image: product.images[0],
       quantity,
     });
-    onBuyNow();
+    router.push('/cart');
   };
 
   const handleToggleFavorite = () => {
