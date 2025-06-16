@@ -21,6 +21,7 @@ export default function HeroBanner() {
       description: "Up to 80% off on Electronics, Fashion & More",
       image: "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1600",
       cta: "Shop Now",
+      ctaLink: "/deals",
       gradient: "from-blue-600 to-purple-600"
     },
     {
@@ -30,6 +31,7 @@ export default function HeroBanner() {
       description: "Min 50% off on Top Brands",
       image: "https://images.pexels.com/photos/5325588/pexels-photo-5325588.jpeg?auto=compress&cs=tinysrgb&w=1600",
       cta: "Explore",
+      ctaLink: "/category/fashion",
       gradient: "from-pink-500 to-orange-500"
     },
     {
@@ -39,6 +41,7 @@ export default function HeroBanner() {
       description: "Best Prices Guaranteed",
       image: "https://images.pexels.com/photos/1294886/pexels-photo-1294886.jpeg?auto=compress&cs=tinysrgb&w=1600",
       cta: "Buy Now",
+      ctaLink: "/category/electronics",
       gradient: "from-green-500 to-blue-500"
     }
   ];
@@ -123,7 +126,7 @@ export default function HeroBanner() {
                 <Button 
                   size="lg" 
                   className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8"
-                  onClick={() => router.push('/deals')}
+                  onClick={() => router.push(slide.ctaLink)}
                 >
                   {slide.cta}
                   <ChevronRight className="ml-2 h-5 w-5" />
