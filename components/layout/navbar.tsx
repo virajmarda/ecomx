@@ -27,12 +27,105 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+const categories = [
+  {
+    id: "electronics",
+    name: "Electronics",
+    icon: "💻",
+    subcategories: [
+      { name: "Mobiles", slug: "mobiles", items: ["Smartphones", "Feature Phones", "Mobile Accessories"] },
+      { name: "Laptops", slug: "laptops", items: ["Gaming Laptops", "Business Laptops", "2-in-1 Laptops"] },
+      { name: "TVs & Appliances", slug: "tvs-appliances", items: ["Smart TVs", "Refrigerators", "Washing Machines"] },
+      { name: "Audio", slug: "audio", items: ["Headphones", "Speakers", "Soundbars"] },
+      { name: "Cameras", slug: "cameras", items: ["DSLR", "Mirrorless", "Action Cameras"] },
+    ]
+  },
+  {
+    id: "fashion",
+    name: "Fashion",
+    icon: "👕",
+    subcategories: [
+      { name: "Men's Clothing", slug: "mens-clothing", items: ["Shirts", "T-Shirts", "Jeans", "Formal Wear"] },
+      { name: "Women's Clothing", slug: "womens-clothing", items: ["Dresses", "Tops", "Sarees", "Ethnic Wear"] },
+      { name: "Footwear", slug: "footwear", items: ["Men's Shoes", "Women's Shoes", "Sports Shoes"] },
+      { name: "Accessories", slug: "accessories", items: ["Watches", "Bags", "Jewelry", "Sunglasses"] },
+      { name: "Kids Fashion", slug: "kids-fashion", items: ["Boys Clothing", "Girls Clothing", "Baby Care"] },
+    ]
+  },
+  {
+    id: "home-kitchen",
+    name: "Home & Kitchen",
+    icon: "🏠",
+    subcategories: [
+      { name: "Kitchen Appliances", slug: "kitchen-appliances", items: ["Mixer Grinders", "Microwave", "Cookware"] },
+      { name: "Home Decor", slug: "home-decor", items: ["Wall Art", "Lighting", "Curtains", "Cushions"] },
+      { name: "Furniture", slug: "furniture", items: ["Sofas", "Beds", "Dining Tables", "Storage"] },
+      { name: "Garden & Outdoor", slug: "garden-outdoor", items: ["Plants", "Garden Tools", "Outdoor Furniture"] },
+    ]
+  },
+  {
+    id: "beauty",
+    name: "Beauty & Personal Care",
+    icon: "💄",
+    subcategories: [
+      { name: "Makeup", slug: "makeup", items: ["Lipstick", "Foundation", "Eye Makeup", "Nail Care"] },
+      { name: "Skincare", slug: "skincare", items: ["Face Wash", "Moisturizers", "Serums", "Sunscreen"] },
+      { name: "Hair Care", slug: "hair-care", items: ["Shampoo", "Hair Oil", "Styling Products"] },
+      { name: "Personal Care", slug: "personal-care", items: ["Bath & Body", "Oral Care", "Deodorants"] },
+    ]
+  },
+  {
+    id: "sports",
+    name: "Sports & Fitness",
+    icon: "⚽",
+    subcategories: [
+      { name: "Fitness Equipment", slug: "fitness-equipment", items: ["Treadmills", "Dumbbells", "Yoga Mats"] },
+      { name: "Sports Gear", slug: "sports-gear", items: ["Cricket", "Football", "Badminton", "Tennis"] },
+      { name: "Activewear", slug: "activewear", items: ["Sports Shoes", "Gym Wear", "Track Suits"] },
+      { name: "Outdoor Sports", slug: "outdoor-sports", items: ["Cycling", "Swimming", "Adventure Gear"] },
+    ]
+  },
+  {
+    id: "books",
+    name: "Books & Media",
+    icon: "📚",
+    subcategories: [
+      { name: "Books", slug: "books", items: ["Fiction", "Non-Fiction", "Academic", "Children's Books"] },
+      { name: "Movies & Music", slug: "movies-music", items: ["DVDs", "Music CDs", "Vinyl Records"] },
+      { name: "Games", slug: "games", items: ["Video Games", "Board Games", "Puzzles"] },
+      { name: "Stationery", slug: "stationery", items: ["Notebooks", "Pens", "Art Supplies"] },
+    ]
+  },
+  {
+    id: "grocery",
+    name: "Grocery & Gourmet",
+    icon: "🛒",
+    subcategories: [
+      { name: "Fresh Produce", slug: "fresh-produce", items: ["Fruits", "Vegetables", "Herbs"] },
+      { name: "Pantry Staples", slug: "pantry-staples", items: ["Rice", "Dal", "Oil", "Spices"] },
+      { name: "Snacks & Beverages", slug: "snacks-beverages", items: ["Chips", "Cookies", "Soft Drinks", "Tea & Coffee"] },
+      { name: "Dairy & Bakery", slug: "dairy-bakery", items: ["Milk", "Bread", "Cheese", "Eggs"] },
+    ]
+  },
+  {
+    id: "automotive",
+    name: "Automotive",
+    icon: "🚗",
+    subcategories: [
+      { name: "Car Accessories", slug: "car-accessories", items: ["Car Care", "Interior Accessories", "Electronics"] },
+      { name: "Bike Accessories", slug: "bike-accessories", items: ["Helmets", "Bike Care", "Riding Gear"] },
+      { name: "Tools & Equipment", slug: "tools-equipment", items: ["Hand Tools", "Power Tools", "Automotive Tools"] },
+    ]
+  }
+];
+
 export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const router = useRouter();
   const { user, login, signup } = useAuth();
   const { toast } = useToast();
@@ -40,7 +133,7 @@ export default function Navbar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/category/${searchQuery.toLowerCase()}`);
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -228,13 +321,11 @@ export default function Navbar() {
                 </DialogContent>
               </Dialog>
             ) : (
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-white" />
-                <span className="text-white font-medium">
-                  {user.name}
-                </span>
-                <ChevronDown className="h-3 w-3 text-white" />
-              </div>
+              <Link href="/account" className="flex items-center gap-2 text-white hover:bg-blue-700 px-2 py-1 rounded">
+                <User className="h-4 w-4" />
+                <span className="font-medium">{user.name}</span>
+                <ChevronDown className="h-3 w-3" />
+              </Link>
             )}
 
             {/* More Dropdown */}
@@ -405,7 +496,7 @@ export default function Navbar() {
                     </Button>
                   </Link>
 
-                  <Link href="/settings">
+                  <Link href="/account">
                     <Button variant="ghost" className="w-full justify-start">
                       <User className="mr-2 h-5 w-5" />
                       Account
@@ -417,29 +508,56 @@ export default function Navbar() {
           </Sheet>
         </div>
 
-        {/* Secondary Navigation */}
+        {/* Secondary Navigation with Categories */}
         <div className="hidden md:flex h-10 items-center justify-between border-t border-blue-500">
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
-              <span className="text-sm">Electronics</span>
-              <ChevronDown className="h-3 w-3" />
-            </div>
-            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
-              <span className="text-sm">Fashion</span>
-              <ChevronDown className="h-3 w-3" />
-            </div>
-            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
-              <span className="text-sm">Home & Kitchen</span>
-              <ChevronDown className="h-3 w-3" />
-            </div>
-            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
-              <span className="text-sm">Beauty</span>
-              <ChevronDown className="h-3 w-3" />
-            </div>
-            <div className="flex items-center gap-1 text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
-              <span className="text-sm">Sports</span>
-              <ChevronDown className="h-3 w-3" />
-            </div>
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className="relative group"
+                onMouseEnter={() => setHoveredCategory(category.id)}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                <Link
+                  href={`/category/${category.id}`}
+                  className="flex items-center gap-2 text-white hover:bg-blue-700 px-3 py-2 rounded cursor-pointer text-sm"
+                >
+                  <span className="text-base">{category.icon}</span>
+                  <span>{category.name}</span>
+                  <ChevronDown className="h-3 w-3" />
+                </Link>
+
+                {/* Mega Menu Dropdown */}
+                {hoveredCategory === category.id && (
+                  <div className="absolute top-full left-0 w-[800px] bg-white shadow-xl border rounded-lg z-50 p-6">
+                    <div className="grid grid-cols-3 gap-6">
+                      {category.subcategories.map((subcategory) => (
+                        <div key={subcategory.slug} className="space-y-3">
+                          <Link
+                            href={`/category/${category.id}/${subcategory.slug}`}
+                            className="font-semibold text-gray-800 hover:text-blue-600 block"
+                          >
+                            {subcategory.name}
+                          </Link>
+                          <ul className="space-y-1">
+                            {subcategory.items.map((item, index) => (
+                              <li key={index}>
+                                <Link
+                                  href={`/category/${category.id}/${subcategory.slug}?filter=${encodeURIComponent(item)}`}
+                                  className="text-sm text-gray-600 hover:text-blue-600 block py-1"
+                                >
+                                  {item}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
           
           <div className="flex items-center gap-1 text-white text-sm">
