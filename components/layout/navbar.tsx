@@ -509,8 +509,8 @@ export default function Navbar() {
         </div>
 
         {/* Secondary Navigation with Categories */}
-        <div className="hidden md:flex h-10 items-center justify-between border-t border-blue-500">
-          <div className="flex items-center gap-6">
+        <div className="hidden md:flex h-10 items-center justify-between border-t border-blue-500 px-2">
+          <div className="flex items-center gap-3 flex-1 overflow-hidden">
             {categories.map((category) => (
               <div
                 key={category.id}
@@ -520,31 +520,32 @@ export default function Navbar() {
               >
                 <Link
                   href={`/category/${category.id}`}
-                  className="flex items-center gap-2 text-white hover:bg-blue-700 px-3 py-2 rounded cursor-pointer text-sm"
+                  className="flex items-center gap-1.5 text-white hover:bg-blue-700 px-2 py-1.5 rounded cursor-pointer text-xs whitespace-nowrap transition-colors"
                 >
-                  <span className="text-base">{category.icon}</span>
-                  <span>{category.name}</span>
-                  <ChevronDown className="h-3 w-3" />
+                  <span className="text-sm">{category.icon}</span>
+                  <span className="hidden lg:inline">{category.name}</span>
+                  <span className="lg:hidden">{category.name.split(' ')[0]}</span>
+                  <ChevronDown className="h-2.5 w-2.5" />
                 </Link>
 
                 {/* Mega Menu Dropdown */}
                 {hoveredCategory === category.id && (
-                  <div className="absolute top-full left-0 w-[800px] bg-white shadow-xl border rounded-lg z-50 p-6">
-                    <div className="grid grid-cols-3 gap-6">
+                  <div className="absolute top-full left-0 w-[700px] bg-white shadow-xl border rounded-lg z-50 p-4">
+                    <div className="grid grid-cols-3 gap-4">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.slug} className="space-y-3">
+                        <div key={subcategory.slug} className="space-y-2">
                           <Link
                             href={`/category/${category.id}/${subcategory.slug}`}
-                            className="font-semibold text-gray-800 hover:text-blue-600 block"
+                            className="font-semibold text-gray-800 hover:text-blue-600 block text-sm"
                           >
                             {subcategory.name}
                           </Link>
-                          <ul className="space-y-1">
+                          <ul className="space-y-0.5">
                             {subcategory.items.map((item, index) => (
                               <li key={index}>
                                 <Link
                                   href={`/category/${category.id}/${subcategory.slug}?filter=${encodeURIComponent(item)}`}
-                                  className="text-sm text-gray-600 hover:text-blue-600 block py-1"
+                                  className="text-xs text-gray-600 hover:text-blue-600 block py-0.5"
                                 >
                                   {item}
                                 </Link>
@@ -560,9 +561,10 @@ export default function Navbar() {
             ))}
           </div>
           
-          <div className="flex items-center gap-1 text-white text-sm">
-            <MapPin className="h-3 w-3" />
-            <span>Deliver to Mumbai 400001</span>
+          <div className="flex items-center gap-1 text-white text-xs whitespace-nowrap ml-2">
+            <MapPin className="h-3 w-3 flex-shrink-0" />
+            <span className="hidden xl:inline">Deliver to Mumbai 400001</span>
+            <span className="xl:hidden">Mumbai 400001</span>
           </div>
         </div>
       </div>
