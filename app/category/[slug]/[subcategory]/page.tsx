@@ -31,7 +31,7 @@ export function generateStaticParams() {
     },
     {
       slug: "books",
-      subcategories: ["books", "movies-music", "games", "stationery"]
+      subcategories: ["fiction", "non-fiction", "academic", "childrens", "comics", "books", "movies-music", "games", "stationery"]
     },
     {
       slug: "grocery",
