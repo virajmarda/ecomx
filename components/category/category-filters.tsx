@@ -115,16 +115,19 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
     section: FilterSection, 
     children: React.ReactNode 
   }) => (
-    <div className="border-b last:border-b-0">
+    <div className="border-b border-gray-200 last:border-b-0 py-1">
       <div
-        className="flex items-center justify-between py-3 cursor-pointer"
+        className="flex items-center justify-between py-4 px-1 cursor-pointer hover:bg-gray-50 rounded-md transition-colors"
         onClick={() => toggleSection(section.id)}
       >
-        <h3 className="font-medium text-sm">{section.title}</h3>
-        {section.expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <h3 className="font-semibold text-sm text-gray-800">{section.title}</h3>
+        {section.expanded ? 
+          <ChevronUp className="h-4 w-4 text-gray-500" /> : 
+          <ChevronDown className="h-4 w-4 text-gray-500" />
+        }
       </div>
       {section.expanded && (
-        <div className="pb-4 space-y-2">
+        <div className="pb-6 px-1 space-y-3">
           {children}
         </div>
       )}
@@ -134,32 +137,33 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
   return (
     <>
       {/* Desktop Filters */}
-      <div className="hidden lg:block w-64 shrink-0 bg-background border rounded-lg overflow-hidden">
-        <div className="p-4 border-b bg-muted/50">
+      <div className="hidden lg:block w-72 shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Filters</h2>
+            <h2 className="font-bold text-lg text-gray-900">Filters</h2>
             {activeFilters > 0 && (
-              <Button variant="ghost" size="sm" onClick={resetFilters}>
+              <Button variant="ghost" size="sm" onClick={resetFilters} className="text-blue-600 hover:text-blue-800 hover:bg-blue-50">
                 Clear All
               </Button>
             )}
           </div>
         </div>
 
-        <div className="divide-y">
+        <div className="p-4 space-y-2">
           {/* Price Ranges */}
           <FilterSection section={sections.find(s => s.id === "price")!}>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {priceRanges.map(range => (
-                <div key={range.value} className="flex items-center">
+                <div key={range.value} className="flex items-center space-x-3 py-1">
                   <Checkbox
                     id={`price-${range.value}`}
                     checked={filters.priceRange === range.value}
                     onCheckedChange={() => setFilters({...filters, priceRange: range.value})}
+                    className="h-4 w-4"
                   />
                   <label
                     htmlFor={`price-${range.value}`}
-                    className="ml-2 text-sm"
+                    className="text-sm text-gray-700 cursor-pointer flex-1"
                   >
                     {range.label}
                   </label>
@@ -170,24 +174,25 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
           {/* Brands */}
           <FilterSection section={sections.find(s => s.id === "brands")!}>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <Input
                 placeholder="Search brands..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-8 text-sm"
+                className="h-9 text-sm border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
-              <div className="space-y-2 max-h-48 overflow-y-auto">
+              <div className="space-y-3 max-h-52 overflow-y-auto pr-2 custom-scrollbar">
                 {filteredBrands.map(brand => (
-                  <div key={brand} className="flex items-center">
+                  <div key={brand} className="flex items-center space-x-3 py-1">
                     <Checkbox
                       id={`brand-${brand}`}
                       checked={filters.brands.includes(brand)}
                       onCheckedChange={() => toggleFilter("brands", brand)}
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor={`brand-${brand}`}
-                      className="ml-2 text-sm"
+                      className="text-sm text-gray-700 cursor-pointer flex-1"
                     >
                       {brand}
                     </label>
@@ -199,20 +204,21 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
           {/* Customer Ratings */}
           <FilterSection section={sections.find(s => s.id === "ratings")!}>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {[4, 3, 2, 1].map(rating => (
-                <div key={rating} className="flex items-center">
+                <div key={rating} className="flex items-center space-x-3 py-1">
                   <Checkbox
                     id={`rating-${rating}`}
                     checked={filters.ratings.includes(rating)}
                     onCheckedChange={() => toggleFilter("ratings", rating.toString())}
+                    className="h-4 w-4"
                   />
                   <label
                     htmlFor={`rating-${rating}`}
-                    className="ml-2 text-sm flex items-center"
+                    className="text-sm text-gray-700 cursor-pointer flex items-center flex-1"
                   >
                     {rating}
-                    <Star className="h-3 w-3 fill-yellow-500 text-yellow-500 ml-1" />
+                    <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400 ml-1" />
                     <span className="ml-1">& above</span>
                   </label>
                 </div>
@@ -222,17 +228,18 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
           {/* Discounts */}
           <FilterSection section={sections.find(s => s.id === "discount")!}>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {discountRanges.map(range => (
-                <div key={range.value} className="flex items-center">
+                <div key={range.value} className="flex items-center space-x-3 py-1">
                   <Checkbox
                     id={`discount-${range.value}`}
                     checked={filters.discount.includes(range.value)}
                     onCheckedChange={() => toggleFilter("discount", range.value)}
+                    className="h-4 w-4"
                   />
                   <label
                     htmlFor={`discount-${range.value}`}
-                    className="ml-2 text-sm"
+                    className="text-sm text-gray-700 cursor-pointer flex-1"
                   >
                     {range.label}
                   </label>
@@ -243,17 +250,18 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
           {/* Availability */}
           <FilterSection section={sections.find(s => s.id === "availability")!}>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {availabilityOptions.map(option => (
-                <div key={option.value} className="flex items-center">
+                <div key={option.value} className="flex items-center space-x-3 py-1">
                   <Checkbox
                     id={`availability-${option.value}`}
                     checked={filters.availability.includes(option.value)}
                     onCheckedChange={() => toggleFilter("availability", option.value)}
+                    className="h-4 w-4"
                   />
                   <label
                     htmlFor={`availability-${option.value}`}
-                    className="ml-2 text-sm"
+                    className="text-sm text-gray-700 cursor-pointer flex-1"
                   >
                     {option.label}
                   </label>
@@ -277,32 +285,33 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
             )}
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-full sm:w-[400px] p-0">
-          <SheetHeader className="p-4 border-b bg-muted/50">
+        <SheetContent side="left" className="w-full sm:w-[400px] p-0 bg-white">
+          <SheetHeader className="p-5 border-b border-gray-200 bg-gray-50">
             <SheetTitle className="flex justify-between">
-              Filters
+              <span className="font-bold text-lg text-gray-900">Filters</span>
               {activeFilters > 0 && (
-                <Button variant="ghost" size="sm" onClick={resetFilters}>
+                <Button variant="ghost" size="sm" onClick={resetFilters} className="text-blue-600 hover:text-blue-800 hover:bg-blue-50">
                   Clear All
                 </Button>
               )}
             </SheetTitle>
           </SheetHeader>
-          <div className="divide-y overflow-y-auto h-[calc(100vh-5rem)]">
+          <div className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-5rem)]">
             {/* Same filter sections as desktop */}
             {/* Price Ranges */}
             <FilterSection section={sections.find(s => s.id === "price")!}>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {priceRanges.map(range => (
-                  <div key={range.value} className="flex items-center">
+                  <div key={range.value} className="flex items-center space-x-3 py-1">
                     <Checkbox
                       id={`price-mobile-${range.value}`}
                       checked={filters.priceRange === range.value}
                       onCheckedChange={() => setFilters({...filters, priceRange: range.value})}
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor={`price-mobile-${range.value}`}
-                      className="ml-2 text-sm"
+                      className="text-sm text-gray-700 cursor-pointer flex-1"
                     >
                       {range.label}
                     </label>
@@ -313,24 +322,25 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
             {/* Brands */}
             <FilterSection section={sections.find(s => s.id === "brands")!}>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <Input
                   placeholder="Search brands..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-8 text-sm"
+                  className="h-9 text-sm border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
-                <div className="space-y-2 max-h-48 overflow-y-auto">
+                <div className="space-y-3 max-h-52 overflow-y-auto pr-2 custom-scrollbar">
                   {filteredBrands.map(brand => (
-                    <div key={brand} className="flex items-center">
+                    <div key={brand} className="flex items-center space-x-3 py-1">
                       <Checkbox
                         id={`brand-mobile-${brand}`}
                         checked={filters.brands.includes(brand)}
                         onCheckedChange={() => toggleFilter("brands", brand)}
+                        className="h-4 w-4"
                       />
                       <label
                         htmlFor={`brand-mobile-${brand}`}
-                        className="ml-2 text-sm"
+                        className="text-sm text-gray-700 cursor-pointer flex-1"
                       >
                         {brand}
                       </label>
@@ -342,20 +352,21 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
             {/* Customer Ratings */}
             <FilterSection section={sections.find(s => s.id === "ratings")!}>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {[4, 3, 2, 1].map(rating => (
-                  <div key={rating} className="flex items-center">
+                  <div key={rating} className="flex items-center space-x-3 py-1">
                     <Checkbox
                       id={`rating-mobile-${rating}`}
                       checked={filters.ratings.includes(rating)}
                       onCheckedChange={() => toggleFilter("ratings", rating.toString())}
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor={`rating-mobile-${rating}`}
-                      className="ml-2 text-sm flex items-center"
+                      className="text-sm text-gray-700 cursor-pointer flex items-center flex-1"
                     >
                       {rating}
-                      <Star className="h-3 w-3 fill-yellow-500 text-yellow-500 ml-1" />
+                      <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400 ml-1" />
                       <span className="ml-1">& above</span>
                     </label>
                   </div>
@@ -365,17 +376,18 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
             {/* Discounts */}
             <FilterSection section={sections.find(s => s.id === "discount")!}>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {discountRanges.map(range => (
-                  <div key={range.value} className="flex items-center">
+                  <div key={range.value} className="flex items-center space-x-3 py-1">
                     <Checkbox
                       id={`discount-mobile-${range.value}`}
                       checked={filters.discount.includes(range.value)}
                       onCheckedChange={() => toggleFilter("discount", range.value)}
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor={`discount-mobile-${range.value}`}
-                      className="ml-2 text-sm"
+                      className="text-sm text-gray-700 cursor-pointer flex-1"
                     >
                       {range.label}
                     </label>
@@ -386,17 +398,18 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
 
             {/* Availability */}
             <FilterSection section={sections.find(s => s.id === "availability")!}>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {availabilityOptions.map(option => (
-                  <div key={option.value} className="flex items-center">
+                  <div key={option.value} className="flex items-center space-x-3 py-1">
                     <Checkbox
                       id={`availability-mobile-${option.value}`}
                       checked={filters.availability.includes(option.value)}
                       onCheckedChange={() => toggleFilter("availability", option.value)}
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor={`availability-mobile-${option.value}`}
-                      className="ml-2 text-sm"
+                      className="text-sm text-gray-700 cursor-pointer flex-1"
                     >
                       {option.label}
                     </label>
@@ -409,10 +422,10 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
       </Sheet>
 
       {/* Sort Controls */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-sm text-muted-foreground">Sort by:</span>
+      <div className="flex items-center gap-3 mb-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <span className="text-sm font-medium text-gray-700">Sort by:</span>
         <Select value={sort} onValueChange={setSort}>
-          <SelectTrigger className="w-[160px]">
+          <SelectTrigger className="w-[180px] border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
             <SelectValue placeholder="Featured" />
           </SelectTrigger>
           <SelectContent>
