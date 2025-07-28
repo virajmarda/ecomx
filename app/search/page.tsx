@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { mockProducts } from "@/lib/mock-data";
 import ProductCard from "@/components/product/product-card";
 import CategoryFilters from "@/components/category/category-filters";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { ChevronRight, Search } from "lucide-react";
 
@@ -12,6 +14,7 @@ function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [searchResults, setSearchResults] = useState(mockProducts);
+  const [sort, setSort] = useState("featured");
 
   useEffect(() => {
     if (query) {
@@ -55,17 +58,40 @@ function SearchResults() {
         </div>
         
         <div className="flex flex-col lg:flex-row gap-8">
-          <Suspense fallback={<div>Loading filters...</div>}>
-            <CategoryFilters products={searchResults} />
-          </Suspense>
+          <CategoryFilters products={searchResults} />
           
           <div className="flex-1">
             {searchResults.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-                {searchResults.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+              <>
+                {/* Sort Controls - Small Button Style */}
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-sm text-muted-foreground">
+                    Showing {searchResults.length} results
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground hidden sm:inline">Sort:</span>
+                    <Select value={sort} onValueChange={setSort}>
+                      <SelectTrigger className="w-[140px] h-9 text-sm border-gray-300">
+                        <ArrowUpDown className="h-3.5 w-3.5 mr-1" />
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="featured">Featured</SelectItem>
+                        <SelectItem value="price-low">Price: Low to High</SelectItem>
+                        <SelectItem value="price-high">Price: High to Low</SelectItem>
+                        <SelectItem value="newest">Newest</SelectItem>
+                        <SelectItem value="rating">Best Rating</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {searchResults.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              </>
             ) : (
               <div className="text-center py-16">
                 <div className="text-6xl mb-4">🔍</div>

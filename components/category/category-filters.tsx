@@ -137,7 +137,7 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
   return (
     <>
       {/* Desktop Filters */}
-      <div className="hidden lg:block w-72 shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+      <div className="hidden lg:block w-72 shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden h-fit">
         <div className="p-5 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center justify-between">
             <h2 className="font-bold text-lg text-gray-900">Filters</h2>
@@ -420,23 +420,6 @@ export default function CategoryFilters({ products }: CategoryFiltersProps) {
           </div>
         </SheetContent>
       </Sheet>
-
-      {/* Sort Controls */}
-      <div className="flex items-center gap-3 mb-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-        <span className="text-sm font-medium text-gray-700">Sort by:</span>
-        <Select value={sort} onValueChange={setSort}>
-          <SelectTrigger className="w-[180px] border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
-            <SelectValue placeholder="Featured" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="featured">Featured</SelectItem>
-            <SelectItem value="price-low">Price: Low to High</SelectItem>
-            <SelectItem value="price-high">Price: High to Low</SelectItem>
-            <SelectItem value="newest">Newest</SelectItem>
-            <SelectItem value="rating">Best Rating</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
     </>
   );
 }

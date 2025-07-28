@@ -3,25 +3,13 @@ import { mockProducts } from "@/lib/mock-data";
 import ProductCard from "@/components/product/product-card";
 import CategoryFilters from "@/components/category/category-filters";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowUpDown } from "lucide-react";
+import { useState } from "react";
 
-// Get unique categories from mock products and ensure all required categories are included
-const categories = [
-  ...new Set([
-    ...mockProducts.map(product => 
-      product.category.toLowerCase().replace(/\s+/g, '-')
-    ),
-    'mobile' // Explicitly include 'mobile' category
-  ])
-];
-
-// Generate static params for all possible category routes
-export function generateStaticParams() {
-  return categories.map((slug) => ({
-    slug,
-  }));
-}
-
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+function CategoryPageClient({ params }: { params: { slug: string } }) {
+  const [sort, setSort] = useState("featured");
+  
   const categoryName = params.slug
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -44,13 +32,34 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       </div>
       
       <div className="flex flex-col lg:flex-row gap-8">
-        <Suspense fallback={<div>Loading filters...</div>}>
-          <CategoryFilters products={products} />
-        </Suspense>
+        <CategoryFilters products={products} />
         
         {/* Product Grid */}
         <div className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Sort Controls - Small Button Style */}
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-sm text-muted-foreground">
+              Showing {products.length} results
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground hidden sm:inline">Sort:</span>
+              <Select value={sort} onValueChange={setSort}>
+                <SelectTrigger className="w-[140px] h-9 text-sm border-gray-300">
+                  <ArrowUpDown className="h-3.5 w-3.5 mr-1" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="featured">Featured</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="rating">Best Rating</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -59,4 +68,25 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       </div>
     </div>
   );
+}
+
+// Get unique categories from mock products and ensure all required categories are included
+const categories = [
+  ...new Set([
+    ...mockProducts.map(product => 
+      product.category.toLowerCase().replace(/\s+/g, '-')
+    ),
+    'mobile' // Explicitly include 'mobile' category
+  ])
+];
+
+// Generate static params for all possible category routes
+export function generateStaticParams() {
+  return categories.map((slug) => ({
+    slug,
+  }));
+}
+
+export default function CategoryPage({ params }: { params: { slug: string } }) {
+  return <CategoryPageClient params={params} />;
 }
