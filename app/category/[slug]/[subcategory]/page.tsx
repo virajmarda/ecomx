@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense } from "react";
 import { mockProducts } from "@/lib/mock-data";
 import ProductCard from "@/components/product/product-card";
