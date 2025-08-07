@@ -47,6 +47,11 @@ export function generateStaticParams() {
     });
   });
 
+  // Explicitly ensure water-sports is included
+  if (!params.find(p => p.slug === 'sports' && p.subcategory === 'water-sports')) {
+    params.push({ slug: 'sports', subcategory: 'water-sports' });
+  }
+
   return params;
 }
 
