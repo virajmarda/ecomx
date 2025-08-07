@@ -21,7 +21,7 @@ export function generateStaticParams() {
     },
     {
       slug: "sports",
-      subcategories: ["fitness-equipment", "sports-gear", "activewear", "outdoor-sports"]
+      subcategories: ["fitness-equipment", "sports-gear", "activewear", "outdoor-sports", "water-sports"]
     },
     {
       slug: "books",
