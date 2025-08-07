@@ -9,7 +9,7 @@ export function generateStaticParams() {
     },
     {
       slug: "fashion", 
-      subcategories: ["mens-clothing", "womens-clothing", "footwear", "accessories", "kids-fashion"]
+      subcategories: ["mens-clothing", "womens-clothing", "footwear", "accessories", "kids-fashion", "ethnic-wear"]
     },
     {
       slug: "home-kitchen",
