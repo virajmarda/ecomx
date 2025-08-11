@@ -265,7 +265,7 @@ export default function HelpPage() {
                 {popularTopics.map((topic, index) => (
                   <Link 
                     key={index}
-                    href={`/help/search?q=${encodeURIComponent(topic)}`}
+                    href={`/search?q=${encodeURIComponent(topic)}`}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                   >
                     <HelpCircle className="h-4 w-4 text-muted-foreground group-hover:text-blue-600" />
