@@ -265,7 +265,17 @@ export default function HelpPage() {
                 {popularTopics.map((topic, index) => (
                   <Link 
                     key={index}
-                    href={`/search?q=${encodeURIComponent(topic)}`}
+                    href={
+                      topic === "How to track my order" ? "/how-to-track-order" :
+                      topic === "Return policy and process" ? "/return-policy-process" :
+                      topic === "Payment methods accepted" ? "/payment-methods-accepted" :
+                      topic === "Shipping costs and delivery time" ? "/shipping-costs-delivery" :
+                      topic === "How to cancel an order" ? "/cancel-order" :
+                      topic === "Product warranty information" ? "/warranty" :
+                      topic === "Account registration issues" ? "/account-registration-issues" :
+                      topic === "Size guide and fitting" ? "/size-guide" :
+                      `/search?q=${encodeURIComponent(topic)}`
+                    }
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                   >
                     <HelpCircle className="h-4 w-4 text-muted-foreground group-hover:text-blue-600" />
@@ -312,7 +322,9 @@ export default function HelpPage() {
                 <p className="text-sm text-muted-foreground mb-3">
                   Connect with other customers and share experiences
                 </p>
-                <Button variant="outline" size="sm">Visit Forum</Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/community-forum">Visit Forum</Link>
+                </Button>
               </div>
               <div className="text-center">
                 <div className="p-3 bg-green-100 rounded-full w-fit mx-auto mb-3">
@@ -322,7 +334,9 @@ export default function HelpPage() {
                 <p className="text-sm text-muted-foreground mb-3">
                   Step-by-step guides for using our platform
                 </p>
-                <Button variant="outline" size="sm">View Guides</Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/user-guides">View Guides</Link>
+                </Button>
               </div>
               <div className="text-center">
                 <div className="p-3 bg-purple-100 rounded-full w-fit mx-auto mb-3">
@@ -332,7 +346,9 @@ export default function HelpPage() {
                 <p className="text-sm text-muted-foreground mb-3">
                   Check current system status and maintenance updates
                 </p>
-                <Button variant="outline" size="sm">Check Status</Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/service-status">Check Status</Link>
+                </Button>
               </div>
             </div>
           </CardContent>
