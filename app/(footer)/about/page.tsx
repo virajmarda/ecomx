@@ -117,8 +117,6 @@ export default function AboutPage() {
           </Link>
         </div>
       </div>
-    </div> 
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
