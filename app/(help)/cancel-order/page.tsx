@@ -182,7 +182,7 @@ export default function CancelOrderPage() {
                     {/* Items */}
                     <div>
                       <h3 className="font-semibold mb-3">Items to Cancel</h3>
-                      {orderData.items.map((item) => (
+                      {orderData.items.map((item: any) => (
                         <div key={item.id} className="flex items-center gap-4 p-3 border rounded-lg">
                           <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden">
                             <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
