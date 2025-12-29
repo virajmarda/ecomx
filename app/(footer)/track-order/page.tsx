@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function TrackOrderPage() {
   const [trackingId, setTrackingId] = useState("");
-  const [orderData, setOrderData] = useState(null);
+  const [orderData, setOrderData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Mock order data
