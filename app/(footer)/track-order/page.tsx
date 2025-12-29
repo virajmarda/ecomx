@@ -168,7 +168,7 @@ export default function TrackOrderPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {orderData.trackingSteps.map((step: any, index) => (
+                  {orderData.trackingSteps.map((step: any, index: number) => (
                     <div key={index} className="flex gap-4">
                       <div className="flex flex-col items-center">
                         <div className={`p-2 rounded-full ${
@@ -208,7 +208,7 @@ export default function TrackOrderPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {orderData.items.map((item, index) => (
+                  {orderData.items.map((item: any, index: number) => (
                     <div key={index} className="flex gap-4">
                       <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
                         <img 
