@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function CancelOrderPage() {
   const [orderNumber, setOrderNumber] = useState("");
-  const [orderData, setOrderData] = useState(null);
+  const [orderData, setOrderData] = useState<any>(null);
   const [cancelReason, setCancelReason] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
